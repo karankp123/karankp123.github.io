@@ -6,13 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
+    <form id="otpForm">
         <input autocomplete="one-time-code" required/>
         <input type="submit">
     </form>
 
+    <div id="message" style="display: none;">OTP submitted successfully!</div>
+
     <script>
-       
         if ('OTPCredential' in window) {
             window.addEventListener('DOMContentLoaded', e => {
                 const input = document.querySelector('input[autocomplete="one-time-code"]');
@@ -21,7 +22,11 @@
                 const form = input.closest('form');
                 if (form) {
                     form.addEventListener('submit', e => {
+                        e.preventDefault(); // Prevent the form from submitting normally
                         ac.abort();
+                        // Simulating form submission success message
+                        document.getElementById('message').style.display = 'block';
+                        // optionally redirect the user or perform other actions here
                     });
                 }
                 navigator.credentials.get({
