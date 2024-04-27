@@ -13,6 +13,7 @@
 
     <div id="message" style="display: none;">OTP submitted successfully!</div>
 
+
     <script>
         if ('OTPCredential' in window) {
             window.addEventListener('DOMContentLoaded', e => {
@@ -28,12 +29,17 @@
                         document.getElementById('message').style.display = 'block';
                         // optionally redirect the user or perform other actions here
                     });
+
+                    // sms format should be:
+                   // Your OTP is: 123456
+                   // @karankp123.github.io #123456
                 }
                 navigator.credentials.get({
                     otp: { transport:['sms'] },
                     signal: ac.signal
                 }).then(otp => {
                     input.value = otp.code;
+                    console.log("OTP value set in input box:", input.value); // will verify OTP value is set in the input box
                     if (form) form.submit();
                 }).catch(err => {
                     console.log(err);
